@@ -21,16 +21,14 @@ class IndexController extends Controller
             ->setBasicAuthentication($this->username, $this->password)
             ->build();
 
-            $response = $client->cat()->indices(['format' => 'json']);
-            $statusCode = $response->getStatusCode();
+        $response = $client->cat()->indices(['format' => 'json']);
+        $statusCode = $response->getStatusCode();
 
-            if ($statusCode === 200) {
-                $indexes = collect(json_decode($response->getBody(), true))->pluck('index');
+        if ($statusCode === 200) {
+            $indexes = collect(json_decode($response->getBody(), true))->pluck('index');
 
-                return view('indexes.index', compact('indexes'));
-          
-            }
-
+            return view('indexes.index', compact('indexes'));
+        }
     }
 
     public function showIndex($index)
@@ -54,5 +52,17 @@ class IndexController extends Controller
 
         $documents = collect($response['hits']['hits'])->pluck('_source');
         return view('indexes.show', compact('index', 'documents'));
+    }
+    public function destroy($index)
+    {
+        $client = ClientBuilder::create()
+            ->setHosts(['http://localhost:9200'])
+            ->setBasicAuthentication($this->username, $this->password)
+            ->build();
+
+        // Xóa chỉ mục
+        $response = $client->indices()->delete(['index' => $index]);
+
+        return redirect()->route('indexes.index')->with('success', 'Index deleted successfully.');
     }
 }

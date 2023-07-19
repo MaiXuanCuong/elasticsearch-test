@@ -10,8 +10,13 @@
             <ul>
                 @foreach ($indexes as $index)
                     <li>
-                        {{ $index }}
-                        <a href="{{ route('documents.index', ['index' => $index]) }}" class="btn btn-primary btn-sm">Show Documents</a>
+                        
+                        <form action="{{ route('indexes.destroy', ['index' => $index]) }}" method="POST">
+                            @csrf
+                            {{ $index }}
+                            <a href="{{ route('documents.index', ['index' => $index]) }}" class="btn btn-primary">Show Documents</a>
+                            <button type="submit" class="btn btn-danger">Xóa chỉ mục</button>
+                        </form>
                     </li>
                 @endforeach
             </ul>

@@ -32,6 +32,7 @@ Route::get('/indexes', [IndexController::class, 'showIndexes'])->name('indexes.s
 
 // Route để hiển thị tài liệu của một index
 Route::get('/indexes/{index}', [IndexController::class, 'showIndex'])->name('indexes.index');
+Route::post('/indexes/{index}/destroy', [IndexController::class, 'destroy'])->name('indexes.destroy');
 
 // Route để hiển thị chi tiết tài liệu từ một index
 Route::get('/indexes/{index}/documents', [DocumentController::class, 'index'])->name('documents.index');

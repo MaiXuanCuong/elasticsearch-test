@@ -16,6 +16,10 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ route('products.index') }}">Products</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('indexes.show') }}">Index</a>
+
+                </li>
                 <!-- Add more navigation links here -->
             </ul>
         </div>

@@ -44,6 +44,7 @@ class ProductController extends Controller
                 'price' => $product->price,
             ],
         ];
+        
 
         $response = $client->index($params);
 
@@ -117,6 +118,46 @@ class ProductController extends Controller
 
         return view('products.index', compact('products'));
     }
+    // public function search(Request $request)
+    // {
+    //     $query = $request->input('query');
+
+    //     // Nếu query rỗng thì trả về tất cả sản phẩm
+    //     if (empty($query)) {
+    //         $products = Product::all();
+    //     } else {
+    //         // Nếu query có ít nhất 2 ký tự, thực hiện tìm kiếm theo ElasticSearch
+    //         if (mb_strlen($query) >= 3) {
+    //             $client = ClientBuilder::create()
+    //                 ->setHosts([
+    //                     'http://localhost:9200',
+    //                 ])
+    //                 ->setBasicAuthentication($this->username, $this->password)
+    //                 ->build();
+
+    //             $params = [
+    //                 'index' => 'products',
+    //                 'body' => [
+    //                     'query' => [
+    //                         'multi_match' => [
+    //                             'query' => $query,
+    //                             'fields' => ['name', 'description'],
+    //                         ],
+    //                     ],
+    //                 ],
+    //             ];
+
+    //             $response = $client->search($params);
+
+    //             $products = collect($response['hits']['hits'])->pluck('_source');
+    //         } else {
+    //             // Nếu query có ít hơn 2 ký tự, không thực hiện tìm kiếm
+    //             return back();
+    //         }
+    //     }
+
+    //     return view('products.index', compact('products'));
+    // }
 
     public function index()
     {
@@ -161,7 +202,7 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
-    
+
     public function showDocs($index)
     {
         $client = ClientBuilder::create()
